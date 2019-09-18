@@ -71,7 +71,7 @@ $csv | select -last 1 | Format-Color @{'GMT' = 'Green'}
 
 write-host "Raw count: "$csv.count 
 
-if($csv.count -gt 24000) {
+if($csv.count -gt 25000) {
      Write-Host "More files to download!!" -ForegroundColor Red -BackgroundColor black 
      Write-Host "`a `a" #beeps will produce
     
