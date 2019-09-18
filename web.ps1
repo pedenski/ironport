@@ -1,9 +1,9 @@
-$username = "a-zdmurai"
-$password = "P@ssword01" 
+$username = "user"
+$password = "Pass" 
 
 $ie = New-Object -com InternetExplorer.Application 
 $ie.visible=$true
-$ie.navigate("https://10.31.20.80/") 
+$ie.navigate("https://ironportIP") 
 while($ie.ReadyState -ne 4) {start-sleep -m 100};
 if ($ie.document.url -Match "invalidcert")
         {
@@ -34,7 +34,7 @@ while($ie.ReadyState -ne 4 -or $ie.Busy) {Start-Sleep -m 1000}
 Start-Sleep -m 2000
 
 
-$ie.navigate("https://10.31.20.80/monitor/message_tracking")
+$ie.navigate("https://ironportIP/monitor/message_tracking")
 write-host "accessing mesage tracking"
 while($ie.ReadyState -ne 4 -or $ie.Busy) {Start-Sleep -m 2000}
 
@@ -49,7 +49,7 @@ $select = $form.getElementsByTagName("select")
 
 
 
-($inputs | where {$_.name -eq "sender"}).value = "careserror@pldt.com.ph"
+($inputs | where {$_.name -eq "sender"}).value = "careserror@.com.ph"
 ($select | where {$_.name -eq "subject_match"}).value = "match_contains"
 
 
