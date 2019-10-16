@@ -68,9 +68,9 @@ write-host "[12] Execute correlation vlookup"
 
 $data = @{}
 Import-Csv 'bounce.csv' | ForEach-Object { $data[$_.MID] = $_.State }
-Import-Csv 'all.csv' |  Select-Object *, @{n='State';e={if ($data.Contains($_.MID)) {$data[$_.MID]} else {'success'}}} | export-csv 'gg.csv' -NoTypeInformation
+Import-Csv 'sorted.csv' |  Select-Object *, @{n='State';e={if ($data.Contains($_.MID)) {$data[$_.MID]} else {'success'}}} | export-csv 'gg.csv' -NoTypeInformation
 
 write-host "[13] Bounce cleanup"
 Remove-Item "bounce.csv"
-Remove-Item "all.csv"
+Remove-Item "sorted.csv"
 write-host "[14] GG!!"

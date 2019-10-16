@@ -81,23 +81,37 @@ if($csv.count -gt 25000) {
 
 } else {
     "`n"
+
+    # consolidate
+    # remove empty
+    # sort MID unique
+
+
+   
     Write-Host "Consolidating..." -ForegroundColor red -BackgroundColor black 
     cat *.csv | sc all.csv
+
+    Set-Content -Path .\removeEmpty.csv -Value (get-content -Path all.csv  | Select-String -Pattern 'empty subject' -NotMatch)
+    $a = Import-Csv .\removeEmpty.csv | Sort-Object MID -Unique 
+    $a | Export-csv .\sorted.csv -NoTypeInformation
     #Get-ChildItem -Filter *.csv | Select-Object -ExpandProperty FullName | Import-Csv | Export-Csv .\ha.csv    -NoTypeInformation -Append
-    $a = Import-Csv .\all.csv | Sort-Object MID -Unique 
-    $a | Export-csv all.csv -NoTypeInformation
-    $a = ".\all.csv"
-    Set-Content -Path $a -Value (get-content -Path $a  | Select-String -Pattern 'empty subject' -NotMatch)
-    Write-Host "Done!" -ForegroundColor red -BackgroundColor black 
+    
+    
+    write-host "..Deleting all.csv"
+    Remove-Item "all.csv"
+    write-host "..Deleting removeEmpty.csv"
+    Remove-Item "removeEmpty.csv"
+    #$a = ".\all.csv"
+    Write-Host "..Done!" -ForegroundColor green -BackgroundColor blue 
 
 
 
     #cat *.csv | sc "all.csv" #merge all .csv
     #Import-csv "all.csv" | Sort-Object -Unique MID | Export-Csv "test.csv" -NoTypeInformation
 
-    $size=Format-FileSize((Get-Item $a ).length)
-    Write-Host "created: $a @ $size"
-    Write-Host "`a `a" #>
+    #$size=Format-FileSize((Get-Item $a ).length)
+    #Write-Host "created: $a @ $size"
+    #Write-Host "`a `a" #>
 
        
 }
